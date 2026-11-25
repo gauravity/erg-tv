@@ -6,14 +6,14 @@ import SwiftUI
 
 @MainActor
 @main
-struct RideScreenApp: App {
+struct ERGTVApp: App {
     @NSApplicationDelegateAdaptor(RideAppDelegate.self) private var delegate
     @StateObject private var model = RideAppModel(demo: CommandLine.arguments.contains("--demo"))
 
     init() { RideTypography.register() }
 
     var body: some Scene {
-        Window("Ride Screen", id: "ride") {
+        Window("ERG TV", id: "ride") {
             RideWindow(model: model)
                 .frame(minWidth: 740, minHeight: 440)
                 .onAppear {

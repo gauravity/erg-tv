@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "RideScreen",
+    name: "ERGTV",
     platforms: [.macOS(.v26)],
-    products: [.executable(name: "RideScreen", targets: ["RideScreen"])],
+    products: [.executable(name: "ERGTV", targets: ["ERGTV"])],
     targets: [
         .target(name: "RideCore"),
         .target(name: "RideBluetooth", dependencies: ["RideCore"]),
         .executableTarget(
-            name: "RideScreen",
+            name: "ERGTV",
             dependencies: ["RideCore", "RideBluetooth"],
             resources: [.copy("Resources")]
         ),

@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDisplayName</key>
-    <string>Ride Screen</string>
+    <string>ERG TV</string>
     <key>CFBundleExecutable</key>
-    <string>RideScreen</string>
+    <string>ERGTV</string>
     <key>CFBundleIdentifier</key>
     <string>com.local.ridescreen</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>Ride Screen</string>
+    <string>ERG TV</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -21,6 +21,6 @@
     <key>LSMinimumSystemVersion</key>
     <string>26.0</string>
     <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>Ride Screen uses Bluetooth to read power, cadence and heart rate from your trainer and sensors and to control supported trainers.</string>
+    <string>ERG TV uses Bluetooth to read power, cadence and heart rate from your trainer and sensors and to control supported trainers.</string>
 </dict>
 </plist>

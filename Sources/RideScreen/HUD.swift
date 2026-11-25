@@ -21,8 +21,8 @@ enum RideTypography {
     }
 
     static func value(_ size: CGFloat) -> Font {
-        hasGeist ? .custom("GeistMono-Regular", fixedSize: size).weight(.bold)
-            : .system(size: size, weight: .bold, design: .monospaced)
+        hasGeist ? .custom("GeistMono-Regular", fixedSize: size)
+            : .system(size: size, weight: .regular, design: .monospaced)
     }
 
     static func label(_ size: CGFloat = 12) -> Font {
@@ -40,18 +40,25 @@ struct MetricValue: View {
     var tint: Color = .white
 
     var body: some View {
+        let number = Text(value).font(RideTypography.value(size)).foregroundColor(tint)
+        let suffix = Text(unit.isEmpty ? "" : " \(unit)")
+            .font(RideTypography.label(unitSize).weight(.semibold))
+            .foregroundColor(.white.opacity(0.88))
+
         HStack(alignment: .firstTextBaseline, spacing: 4) {
-            Text(value)
+            Text(String(repeating: "0", count: slot))
                 .font(RideTypography.value(size))
-                .lineLimit(1)
-                .minimumScaleFactor(0.65)
                 .frame(width: size * 0.63 * CGFloat(slot), alignment: .leading)
-                .foregroundStyle(tint)
             if !unit.isEmpty {
                 Text(unit).font(RideTypography.label(unitSize).weight(.semibold))
-                    .foregroundStyle(.white.opacity(0.88))
                     .fixedSize()
             }
+        }
+        .hidden()
+        .overlay(alignment: .leading) {
+            Text("\(number)\(suffix)")
+                .lineLimit(1)
+                .minimumScaleFactor(0.65)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(label)

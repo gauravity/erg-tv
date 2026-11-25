@@ -48,7 +48,7 @@ final class Playback: ObservableObject {
 
     func preference(for service: VideoService) -> PlaybackRoute {
         preferences.string(forKey: "video.route.\(service.rawValue)")
-            .flatMap(PlaybackRoute.init(rawValue:)) ?? .safari
+            .flatMap(PlaybackRoute.init(rawValue:)) ?? .inApp
     }
 
     func setPreference(_ route: PlaybackRoute, for service: VideoService) {
@@ -85,6 +85,23 @@ struct EmbeddedVideo: NSViewRepresentable {
     let url: URL
     let onFailure: () -> Void
 
+    final class Container: NSView {
+        let player: WKWebView
+
+        init(configuration: WKWebViewConfiguration) {
+            player = WKWebView(frame: .zero, configuration: configuration)
+            super.init(frame: .zero)
+            // WebKit temporarily moves the player to its own window for fullscreen.
+            player.frame = bounds
+            player.translatesAutoresizingMaskIntoConstraints = true
+            player.autoresizingMask = [.width, .height]
+            addSubview(player)
+        }
+
+        @available(*, unavailable)
+        required init?(coder: NSCoder) { return nil }
+    }
+
     final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         let onFailure: () -> Void
         init(onFailure: @escaping () -> Void) { self.onFailure = onFailure }
@@ -117,22 +134,26 @@ struct EmbeddedVideo: NSViewRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(onFailure: onFailure) }
 
-    func makeNSView(context: Context) -> WKWebView {
+    func makeNSView(context: Context) -> Container {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .default()
-        let player = WKWebView(frame: .zero, configuration: configuration)
+        configuration.preferences.isElementFullscreenEnabled = true
+        let container = Container(configuration: configuration)
+        let player = container.player
         player.navigationDelegate = context.coordinator
         player.uiDelegate = context.coordinator
         player.load(URLRequest(url: url))
-        return player
+        return container
     }
 
-    func updateNSView(_ player: WKWebView, context: Context) {}
+    func updateNSView(_ container: Container, context: Context) {}
 
-    static func dismantleNSView(_ player: WKWebView, coordinator: Coordinator) {
+    static func dismantleNSView(_ container: Container, coordinator: Coordinator) {
+        let player = container.player
         player.navigationDelegate = nil
         player.uiDelegate = nil
         player.stopLoading()
+        player.closeAllMediaPresentations(completionHandler: nil)
         player.loadHTMLString("", baseURL: nil)
     }
 }

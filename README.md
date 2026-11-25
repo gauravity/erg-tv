@@ -1,0 +1,29 @@
+# Ride Screen
+
+A personal indoor cycling app for Apple silicon Macs running macOS 26 or later. It displays live ride metrics and controls the target power of a compatible Bluetooth trainer while you watch video.
+
+## Build and try it
+
+1. With Xcode Command Line Tools and Swift 6.2 or later, open Terminal in this project folder and build the app.
+
+   ```sh
+   ./scripts/build-app.sh
+   ```
+
+2. Open **Ride Screen** in the **outputs** folder for a real ride. To explore with simulated readings, launch the demo instead.
+
+   ```sh
+   open -n 'outputs/Ride Screen.app' --args --demo
+   ```
+
+## First ride checks
+
+1. Wake your trainer and put on your heart-rate strap. Close any other app controlling the trainer. Allow Bluetooth when macOS asks. If you previously declined, enable Ride Screen under **System Settings → Privacy & Security → Bluetooth**. Open **Devices** from the ride menu to check what’s connected.
+2. Sit on the bike and choose a comfortably low fixed power target in **Workout setup**. Pedal easily through the first target change at three minutes. Check that the displayed target changes and you feel the trainer respond. Check that heart rate comes from your strap and updates as you ride.
+3. At easy effort, test a trainer disconnect and reconnect. Check that the app reports the interruption, shows when trainer control is uncertain and waits for you to resume. Resume at easy effort, then choose **End ride** and confirm to send the trainer a stop command. If the connection drops, the app may be unable to confirm that the trainer stopped.
+
+## Video
+
+Choose YouTube, Plex or BBC iPlayer from the bottom-right menu. Start with the default **Safari** route. Use a maximised Safari window and the provider’s playback controls. **Video settings** lets you try **In app** separately for each service. Check sign-in and playback for each service you use before relying on it during a ride.
+
+Trainer control, live heart-rate readings, reconnects and signed-in playback still need hands-on verification. Garmin integration is deferred.

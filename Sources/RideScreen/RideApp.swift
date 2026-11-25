@@ -16,7 +16,10 @@ struct RideScreenApp: App {
         Window("Ride Screen", id: "ride") {
             RideWindow(model: model)
                 .frame(minWidth: 740, minHeight: 440)
-                .onAppear { delegate.model = model }
+                .onAppear {
+                    delegate.model = model
+                    model.playback.restoreOnLaunch()
+                }
         }
         .defaultSize(width: 1120, height: 680)
         .commands {

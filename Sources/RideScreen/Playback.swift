@@ -32,18 +32,34 @@ enum PlaybackRoute: String, CaseIterable, Identifiable {
 @MainActor
 final class Playback: ObservableObject {
     static let safariIdentifier = "com.apple.Safari"
+    private static let reopeningKey = "video.reopenLastService"
+    private static let lastServiceKey = "video.lastService"
 
     @Published private(set) var service: VideoService?
     @Published private(set) var route: PlaybackRoute?
     @Published private(set) var requestID = UUID()
     @Published private(set) var issue: String?
+    @Published var reopenLastService: Bool {
+        didSet { preferences.set(reopenLastService, forKey: Self.reopeningKey) }
+    }
 
     private let preferences: UserDefaults
     private let demo: Bool
+    private var didAttemptRestore = false
 
     init(preferences: UserDefaults, demo: Bool) {
         self.preferences = preferences
         self.demo = demo
+        reopenLastService = preferences.object(forKey: Self.reopeningKey) as? Bool ?? true
+    }
+
+    func restoreOnLaunch() {
+        guard !didAttemptRestore else { return }
+        didAttemptRestore = true
+        guard reopenLastService, service == nil,
+              let stored = preferences.string(forKey: Self.lastServiceKey),
+              let lastService = VideoService(rawValue: stored) else { return }
+        open(lastService)
     }
 
     func preference(for service: VideoService) -> PlaybackRoute {
@@ -57,6 +73,7 @@ final class Playback: ObservableObject {
     }
 
     func open(_ service: VideoService, route preferredRoute: PlaybackRoute? = nil) {
+        preferences.set(service.rawValue, forKey: Self.lastServiceKey)
         self.service = service
         issue = nil
         requestID = UUID()

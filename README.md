@@ -26,6 +26,8 @@ A personal indoor cycling app for Apple silicon Macs running macOS 26 or later. 
 
 Choose YouTube, Plex or BBC iPlayer from the bottom-right menu. Services open **In app** by default. If sign-in or playback fails, select **Safari** for that service in **Video settings**. Check sign-in and playback for each service you use before relying on it during a ride.
 
-When the green macOS window button is available, use it to go fullscreen with your ride metrics visible. The video player’s own fullscreen control can hide the ride metrics.
+Once you choose a service, Ride Screen remembers it for the next time you open the app. Turn off **Reopen last service on launch** in **Video settings** to start with an empty player.
+
+To enlarge Ride Screen on the current desktop, hover over the green window button and choose **Fill** under **Fill & Arrange**. In YouTube, **Theatre mode** enlarges the player within the page. A streaming player’s own full-screen control can move video to a separate desktop and hide the ride metrics.
 
 Trainer control, live heart-rate readings, reconnects and signed-in playback still need hands-on verification. Garmin integration is deferred.

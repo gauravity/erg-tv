@@ -409,6 +409,8 @@ private struct VideoSetup: View {
             }
             Text("Use Safari if sign-in, audio or playback gives you trouble in the app.")
                 .font(.callout).foregroundStyle(.secondary)
+            Divider()
+            Toggle("Reopen last service on launch", isOn: $playback.reopenLastService)
             HStack {
                 Spacer()
                 Button("Done") { model.sheet = nil }.keyboardShortcut(.defaultAction)
